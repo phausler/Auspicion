@@ -99,6 +99,19 @@
 				D4E572CA19E1AD4D00158018 /* Auspicion.h */,
 				D4C6E6C119E227C700A575F5 /* Context.swift */,
 				D4C6E6C219E227C700A575F5 /* Module.swift */,
+				5BBB864E19E2E0AE006F4ADA /* VirtualFileOverlay.swift */,
+				5BBB865219E2E826006F4ADA /* ModuleMapDescriptor.swift */,
+				5BBB865419E2E9A6006F4ADA /* CompilationDatabase.swift */,
+				5BBB865619E2EAF0006F4ADA /* CompileCommands.swift */,
+				5BBB865C19E2FF03006F4ADA /* Index.swift */,
+				5BBB865E19E300CD006F4ADA /* TranslationUnit.swift */,
+				5BBB866019E315B2006F4ADA /* Cursor.swift */,
+				5BBB866219E31845006F4ADA /* SourceLocation.swift */,
+				5BBB866419E3188E006F4ADA /* SourceRange.swift */,
+				5BBB866619E31C75006F4ADA /* File.swift */,
+				5BBB866819E31E9B006F4ADA /* Type.swift */,
+				5BBB865019E2E307006F4ADA /* CXErrorCode.swift */,
+				5BBB866A19E31F32006F4ADA /* CXString.swift */,
 				D4E572C819E1AD4D00158018 /* Supporting Files */,
 			);
 			path = Auspicion;
@@ -255,8 +268,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BBB865519E2E9A6006F4ADA /* CompilationDatabase.swift in Sources */,
+				5BBB865319E2E826006F4ADA /* ModuleMapDescriptor.swift in Sources */,
+				5BBB865119E2E307006F4ADA /* CXErrorCode.swift in Sources */,
+				5BBB864F19E2E0AE006F4ADA /* VirtualFileOverlay.swift in Sources */,
+				5BBB866319E31845006F4ADA /* SourceLocation.swift in Sources */,
+				5BBB865719E2EAF0006F4ADA /* CompileCommands.swift in Sources */,
+				5BBB866119E315B2006F4ADA /* Cursor.swift in Sources */,
+				5BBB865F19E300CD006F4ADA /* TranslationUnit.swift in Sources */,
 				D4C6E6C319E227C700A575F5 /* Context.swift in Sources */,
+				5BBB865D19E2FF03006F4ADA /* Index.swift in Sources */,
+				5BBB866719E31C75006F4ADA /* File.swift in Sources */,
+				5BBB866919E31E9B006F4ADA /* Type.swift in Sources */,
+				5BBB866519E3188E006F4ADA /* SourceRange.swift in Sources */,
 				D4C6E6C419E227C700A575F5 /* Module.swift in Sources */,
+				5BBB866B19E31F32006F4ADA /* CXString.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
