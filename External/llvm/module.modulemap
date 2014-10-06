@@ -20,3 +20,14 @@ module llvm [extern_c] {
 	header "llvm-c/Transforms/Vectorize.h"
 	header "llvm-c/lto.h"
 }
+
+module clang [extern_c] {
+    header "defines.h"
+    header "clang-c/BuildSystem.h"
+    header "clang-c/CXCompilationDatabase.h"
+    header "clang-c/CXErrorCode.h"
+    header "clang-c/CXString.h"
+    header "clang-c/Documentation.h"
+    header "clang-c/Index.h"
+    header "clang-c/Platform.h"
+}
