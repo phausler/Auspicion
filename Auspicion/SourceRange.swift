@@ -13,6 +13,10 @@ public final class SourceRange {
         self.context = context
     }
     
+    public convenience init(begin: SourceLocation, end: SourceLocation) {
+        self.init(clang_getRange(begin.context, end.context))
+    }
+    
     private var _start: SourceLocation? = nil
     public var start: SourceLocation {
         if _start == nil {
