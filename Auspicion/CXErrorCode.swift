@@ -8,11 +8,54 @@
 
 import clang
 
+// Sadly most of the error codes are inconsistent and are sometimes 
+// signed return values and sometimes unsigned values...
+
 public func ==(lhs: CXErrorCode, rhs: CXErrorCode) -> Bool {
     return lhs.value == rhs.value
 }
 
+public func ==(lhs: UInt32, rhs: CXErrorCode) -> Bool {
+    return lhs == rhs.value
+}
+
+public func ==(lhs: Int32, rhs: CXErrorCode) -> Bool {
+    return lhs == Int32(rhs.value)
+}
+
+public func ==(lhs: CXErrorCode, rhs: UInt32) -> Bool {
+    return lhs.value == rhs
+}
+
+public func ==(lhs: CXErrorCode, rhs: Int32) -> Bool {
+    return Int32(lhs.value) == rhs
+}
+
+public func ==(lhs: CXSaveError, rhs: CXSaveError) -> Bool {
+    return lhs.value == rhs.value
+}
+
+public func ==(lhs: UInt32, rhs: CXSaveError) -> Bool {
+    return lhs == rhs.value
+}
+
+public func ==(lhs: Int32, rhs: CXSaveError) -> Bool {
+    return lhs == Int32(rhs.value)
+}
+
+public func ==(lhs: CXSaveError, rhs: UInt32) -> Bool {
+    return lhs.value == rhs
+}
+
+public func ==(lhs: CXSaveError, rhs: Int32) -> Bool {
+    return Int32(lhs.value) == rhs
+}
+
 extension CXErrorCode : Equatable {
+    
+}
+
+extension CXSaveError : Equatable {
     
 }
 
