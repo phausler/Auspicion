@@ -17,7 +17,9 @@ public final class Type {
     var spelling: String {
         get {
             if _spelling == nil {
-                _spelling = String.fromCXString(clang_getTypeSpelling(self.context))
+                let val = clang_getTypeSpelling(self.context)
+                _spelling = String.fromCXString(val)
+                clang_disposeString(val)
             }
             return _spelling!
         }
@@ -228,7 +230,10 @@ extension Type : Equatable {
 extension CXTypeKind {
     var spelling: String {
         get {
-            return String.fromCXString(clang_getTypeKindSpelling(self))
+            let val = clang_getTypeKindSpelling(self)
+            let str = String.fromCXString(val)
+            clang_disposeString(val)
+            return str
         }
     }
 }

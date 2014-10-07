@@ -18,7 +18,9 @@ public final class File {
     var path: String {
         get {
             if _path == nil {
-                _path = String.fromCXString(clang_getFileName(self.context))
+                let val = clang_getFileName(self.context)
+                _path = String.fromCXString(val)
+                clang_disposeString(val)
             }
             return _path!
         }

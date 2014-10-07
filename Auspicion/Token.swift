@@ -24,7 +24,10 @@ public final class Token {
     }
     
     func spelling(tu: TranslationUnit) -> String {
-        return String.fromCXString(clang_getTokenSpelling(tu.context, self.context))
+        let val = clang_getTokenSpelling(tu.context, self.context)
+        let str = String.fromCXString(val)
+        clang_disposeString(val)
+        return str
     }
     
     func location(tu: TranslationUnit) -> SourceLocation {

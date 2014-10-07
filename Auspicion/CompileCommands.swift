@@ -17,7 +17,9 @@ public final class CompileCommand {
     var directory: String {
         get {
             if _directory == nil {
-                _directory = String.fromCXString(clang_CompileCommand_getDirectory(self.context))
+                let dir = clang_CompileCommand_getDirectory(self.context)
+                _directory = String.fromCXString(dir)
+                clang_disposeString(dir)
             }
             return _directory!
         }
@@ -29,7 +31,9 @@ public final class CompileCommand {
             if _arguments == nil {
                 _arguments = Array<String>()
                 for var i: UInt32 = 0; i < clang_CompileCommand_getNumArgs(self.context); i++ {
-                    let argument: String = String.fromCXString(clang_CompileCommand_getArg(self.context, i))
+                    let val = clang_CompileCommand_getArg(self.context, i)
+                    let argument: String = String.fromCXString(val)
+                    clang_disposeString(val)
                     _arguments!.append(argument)
                 }
             }
@@ -43,7 +47,9 @@ public final class CompileCommand {
             if _mappedSources == nil {
                 _mappedSources = Array<String>()
                 for var i: UInt32 = 0; i < clang_CompileCommand_getNumMappedSources(self.context); i++ {
-                    let path: String = String.fromCXString(clang_CompileCommand_getMappedSourcePath(self.context, i))
+                    let val = clang_CompileCommand_getMappedSourcePath(self.context, i)
+                    let path: String = String.fromCXString(val)
+                    clang_disposeString(val)
                     _mappedSources!.append(path)
                 }
             }
