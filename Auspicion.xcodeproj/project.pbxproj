@@ -110,8 +110,10 @@
 				5BBB866419E3188E006F4ADA /* SourceRange.swift */,
 				5BBB866619E31C75006F4ADA /* File.swift */,
 				5BBB866819E31E9B006F4ADA /* Type.swift */,
+				5BBB866E19E388DE006F4ADA /* Token.swift */,
 				5BBB865019E2E307006F4ADA /* CXErrorCode.swift */,
 				5BBB866A19E31F32006F4ADA /* CXString.swift */,
+				5BBB866C19E38671006F4ADA /* CXTUResourceUsageKind.swift */,
 				D4E572C819E1AD4D00158018 /* Supporting Files */,
 			);
 			path = Auspicion;
@@ -281,7 +283,9 @@
 				5BBB866719E31C75006F4ADA /* File.swift in Sources */,
 				5BBB866919E31E9B006F4ADA /* Type.swift in Sources */,
 				5BBB866519E3188E006F4ADA /* SourceRange.swift in Sources */,
+				5BBB866D19E38671006F4ADA /* CXTUResourceUsageKind.swift in Sources */,
 				D4C6E6C419E227C700A575F5 /* Module.swift in Sources */,
+				5BBB866F19E388DE006F4ADA /* Token.swift in Sources */,
 				5BBB866B19E31F32006F4ADA /* CXString.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
