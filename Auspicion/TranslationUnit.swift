@@ -79,6 +79,9 @@ public final class TranslationUnit {
     }
     
     deinit {
+        if _tokenCount > 0 {
+            clang_disposeTokens(self.context, _tokens, _tokenCount)
+        }
         clang_disposeTranslationUnit(self.context)
     }
     
@@ -130,13 +133,17 @@ public final class TranslationUnit {
         return File(clang_getFile(self.context, path))
     }
     
+    private var _tokens: UnsafeMutablePointer<CXToken> = UnsafeMutablePointer<CXToken>.null()
+    private var _tokenCount: UInt32 = 0
+    
     func tokenize(range: SourceRange) -> Array<Token> {
-        var tokens: UnsafeMutablePointer<CXToken> = UnsafeMutablePointer<CXToken>.null()
-        var count: UInt32 = 0
-        clang_tokenize(self.context, range.context, &tokens, &count)
+        if _tokenCount > 0 {
+            clang_disposeTokens(self.context, _tokens, _tokenCount)
+        }
+        clang_tokenize(self.context, range.context, &_tokens, &_tokenCount)
         var found: Array<Token> = Array<Token>()
-        for var i: UInt32 = 0; i < count; i++ {
-            found.append(Token(tokens[Int(i)]))
+        for var i: UInt32 = 0; i < _tokenCount; i++ {
+            found.append(Token(_tokens[Int(i)]))
         }
         return found
     }
