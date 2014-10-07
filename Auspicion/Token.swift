@@ -14,7 +14,7 @@ public final class Token {
     }
     
     private var _kind: CXTokenKind? = nil
-    var kind: CXTokenKind {
+    public var kind: CXTokenKind {
         get {
             if _kind == nil {
                 _kind = clang_getTokenKind(self.context)
@@ -23,18 +23,18 @@ public final class Token {
         }
     }
     
-    func spelling(tu: TranslationUnit) -> String {
+    public func spelling(tu: TranslationUnit) -> String {
         let val = clang_getTokenSpelling(tu.context, self.context)
         let str = String.fromCXString(val)
         clang_disposeString(val)
         return str
     }
     
-    func location(tu: TranslationUnit) -> SourceLocation {
+    public func location(tu: TranslationUnit) -> SourceLocation {
         return SourceLocation(clang_getTokenLocation(tu.context, self.context))
     }
     
-    func extent(tu: TranslationUnit) -> SourceRange {
+    public func extent(tu: TranslationUnit) -> SourceRange {
         return SourceRange(clang_getTokenExtent(tu.context, self.context))
     }
     

@@ -13,7 +13,7 @@ public final class Index {
         self.context = context
     }
     
-    convenience init(excludeDeclarationsFromPCH: Bool, displayDiagnostics: Bool) {
+    public convenience init(excludeDeclarationsFromPCH: Bool, displayDiagnostics: Bool) {
         self.init(clang_createIndex(excludeDeclarationsFromPCH ? 1 : 0, displayDiagnostics ? 1 : 0))
     }
     
@@ -21,7 +21,7 @@ public final class Index {
         clang_disposeIndex(self.context)
     }
     
-    var globalOptions: CXGlobalOptFlags {
+    public var globalOptions: CXGlobalOptFlags {
         get {
             return CXGlobalOptFlags(clang_CXIndex_getGlobalOptions(self.context))
         }

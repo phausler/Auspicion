@@ -14,7 +14,7 @@ public final class SourceRange {
     }
     
     private var _start: SourceLocation? = nil
-    var start: SourceLocation {
+    public var start: SourceLocation {
         if _start == nil {
             _start = SourceLocation(clang_getRangeStart(self.context))
         }
@@ -22,7 +22,7 @@ public final class SourceRange {
     }
     
     private var _end: SourceLocation? = nil
-    var end: SourceLocation {
+    public var end: SourceLocation {
         if _end == nil {
             _end = SourceLocation(clang_getRangeEnd(self.context))
         }

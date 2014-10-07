@@ -36,7 +36,7 @@ public final class TranslationUnit {
         self.context = context
     }
     
-    convenience init(index: Index, astFileName: String) {
+    public convenience init(index: Index, astFileName: String) {
         self.init(clang_createTranslationUnit(index.context, astFileName))
     }
     
@@ -74,7 +74,7 @@ public final class TranslationUnit {
         }
     }
     
-    convenience init(index: Index, sourceFile: String, args: Array<String>) {
+    public convenience init(index: Index, sourceFile: String, args: Array<String>) {
         self.init(index: index, sourceFile: sourceFile, args: args, unsavedFiles: Dictionary<String, String>())
     }
     
@@ -85,21 +85,21 @@ public final class TranslationUnit {
         clang_disposeTranslationUnit(self.context)
     }
     
-    var usage: TUResourceUsage {
+    public var usage: TUResourceUsage {
         get {
             return TUResourceUsage(clang_getCXTUResourceUsage(self.context))
         }
     }
     
-    func reparse() -> Bool {
+    public func reparse() -> Bool {
         return clang_defaultReparseOptions(self.context) == 0
     }
     
-    func defaultParseOptions() -> UInt32 {
+    public func defaultParseOptions() -> UInt32 {
         return clang_defaultReparseOptions(self.context)
     }
     
-    func reparse(unsavedFiles: Dictionary<String, String>, options: UInt32) -> Bool {
+    public func reparse(unsavedFiles: Dictionary<String, String>, options: UInt32) -> Bool {
         var unsavedBuffer = UnsafeMutablePointer<CXUnsavedFile>.null()
         var unsavedCount: UInt32 = UInt32(unsavedFiles.count)
         var idx = 0
@@ -119,24 +119,24 @@ public final class TranslationUnit {
         return clang_reparseTranslationUnit(self.context, unsavedCount, unsavedBuffer, options) == 0
     }
     
-    var cursor: Cursor {
+    public var cursor: Cursor {
         get {
             return Cursor(clang_getTranslationUnitCursor(self.context))
         }
     }
     
-    func cursor(location: SourceLocation) -> Cursor {
+    public func cursor(location: SourceLocation) -> Cursor {
         return Cursor(clang_getCursor(self.context, location.context))
     }
     
-    func file(path: String) -> File {
+    public func file(path: String) -> File {
         return File(clang_getFile(self.context, path))
     }
     
     private var _tokens: UnsafeMutablePointer<CXToken> = UnsafeMutablePointer<CXToken>.null()
     private var _tokenCount: UInt32 = 0
     
-    func tokenize(range: SourceRange) -> Array<Token> {
+    public func tokenize(range: SourceRange) -> Array<Token> {
         if _tokenCount > 0 {
             clang_disposeTokens(self.context, _tokens, _tokenCount)
         }
@@ -149,7 +149,7 @@ public final class TranslationUnit {
     }
     
     
-    func save(path: String, options: UInt32) -> Bool {
+    public func save(path: String, options: UInt32) -> Bool {
         return clang_saveTranslationUnit(self.context, path, options) == CXSaveError_None
     }
     

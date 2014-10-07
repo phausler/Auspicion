@@ -15,7 +15,7 @@ public final class File {
     }
     
     private var _path: String? = nil
-    var path: String {
+    public var path: String {
         get {
             if _path == nil {
                 let val = clang_getFileName(self.context)
@@ -26,7 +26,7 @@ public final class File {
         }
     }
     
-    var lastModification: time_t {
+    public var lastModification: time_t {
         get {
             return clang_getFileTime(self.context)
         }

@@ -19,7 +19,7 @@ public final class SourceLocation {
         }
     }
     
-    var inMainFile: Bool {
+    public var inMainFile: Bool {
         get {
             return clang_Location_isFromMainFile(self.context) != 0
         }
@@ -40,7 +40,7 @@ public final class SourceLocation {
     }
     
     private var _spellingFile: File? = nil
-    var spellingFile: File {
+    public var spellingFile: File {
         get {
             getSpellingInfo()
             return _spellingFile!
@@ -48,7 +48,7 @@ public final class SourceLocation {
     }
     
     private var _spellingLine: UInt32? = nil
-    var spellingLine: UInt32 {
+    public var spellingLine: UInt32 {
         get {
             getSpellingInfo()
             return _spellingLine!
@@ -56,7 +56,7 @@ public final class SourceLocation {
     }
     
     private var _spellingColumn: UInt32? = nil
-    var spellingColumn: UInt32 {
+    public var spellingColumn: UInt32 {
         get {
             getSpellingInfo()
             return _spellingColumn!
@@ -64,7 +64,7 @@ public final class SourceLocation {
     }
     
     private var _spellingOffset: UInt32? = nil
-    var spellingOffset: UInt32 {
+    public var spellingOffset: UInt32 {
         get {
             getSpellingInfo()
             return _spellingOffset!
@@ -86,7 +86,7 @@ public final class SourceLocation {
     }
     
     private var _file: File? = nil
-    var file: File {
+    public var file: File {
         get {
             getFileInfo()
             return _file!
@@ -94,7 +94,7 @@ public final class SourceLocation {
     }
     
     private var _line: UInt32? = nil
-    var line: UInt32 {
+    public var line: UInt32 {
         get {
             getFileInfo()
             return _line!
@@ -102,7 +102,7 @@ public final class SourceLocation {
     }
     
     private var _column: UInt32? = nil
-    var column: UInt32 {
+    public var column: UInt32 {
         get {
             getFileInfo()
             return _column!
@@ -110,7 +110,7 @@ public final class SourceLocation {
     }
     
     private var _offset: UInt32? = nil
-    var offset: UInt32 {
+    public var offset: UInt32 {
         get {
             getFileInfo()
             return _offset!
