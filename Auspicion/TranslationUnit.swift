@@ -148,5 +148,10 @@ public final class TranslationUnit {
         return found
     }
     
+    
+    func save(path: String, options: UInt32) -> Bool {
+        return clang_saveTranslationUnit(self.context, path, options) == CXSaveError_None
+    }
+    
     internal let context: CXTranslationUnit
 }
