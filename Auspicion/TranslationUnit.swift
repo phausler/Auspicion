@@ -40,38 +40,41 @@ public final class TranslationUnit {
         self.init(clang_createTranslationUnit(index.context, astFileName))
     }
     
-    convenience init(index: Index, sourceFile: String, args: Array<String>, unsavedFiles: Dictionary<String, String>) {
+    private var argc: Int = -1
+    private var argv: UnsafeMutablePointer<UnsafePointer<Int8>> = UnsafeMutablePointer<UnsafePointer<Int8>>.null()
+    
+    public init(index: Index, sourceFile: String, args: Array<String>, unsavedFiles: Dictionary<String, String>) {
         // This entire section seems rather dirty and ineffecient
-        var buffer = UnsafeMutablePointer<UnsafePointer<Int8>>.alloc(args.count + 1)
+        argc = args.count
+        argv = UnsafeMutablePointer<UnsafePointer<Int8>>.alloc(argc + 1)
+        self.context = nil
         var idx = 0
         for arg in args {
-            let cStr: UnsafePointer<Void> = arg.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!.bytes
-            buffer[idx] = unsafeBitCast(cStr, UnsafePointer<Int8>.self)
+            let argData = [UInt8](arg.utf8)
+            argData.withUnsafeBufferPointer({ (argBuffer: UnsafeBufferPointer<(UInt8)>) -> Void in                
+                self.argv[idx] = UnsafePointer<Int8>(argBuffer.baseAddress)
+            })
             idx++
         }
         
-        var unsavedBuffer = UnsafeMutablePointer<CXUnsavedFile>.null()
+
         var unsavedCount: UInt32 = UInt32(unsavedFiles.count)
+        var unsavedBuffer:  UnsafeMutablePointer<CXUnsavedFile> = UnsafeMutablePointer<CXUnsavedFile>.alloc(Int(unsavedCount + 1))
         idx = 0
-        if unsavedCount > 0 {
-            unsavedBuffer = UnsafeMutablePointer<CXUnsavedFile>.alloc(Int(unsavedCount))
-            for (key, value) in unsavedFiles {
-                let path: UnsafePointer<Void> = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!.bytes
-                var data: NSData = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-                let contents: UnsafePointer<Void> = data.bytes
-                unsavedBuffer[idx].Filename = unsafeBitCast(path, UnsafePointer<Int8>.self)
-                unsavedBuffer[idx].Contents = unsafeBitCast(contents, UnsafePointer<Int8>.self)
-                unsavedBuffer[idx].Length = UInt(data.length)
-                idx++
-            }
+        for (key, value) in unsavedFiles {
+            let path: UnsafePointer<Void> = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!.bytes
+            var data: NSData = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+            let contents: UnsafePointer<Void> = data.bytes
+            unsavedBuffer[idx].Filename = unsafeBitCast(path, UnsafePointer<Int8>.self)
+            unsavedBuffer[idx].Contents = unsafeBitCast(contents, UnsafePointer<Int8>.self)
+            unsavedBuffer[idx].Length = UInt(data.length)
+            idx++
         }
         
-        self.init(clang_createTranslationUnitFromSourceFile(index.context, sourceFile, Int32(args.count), buffer, unsavedCount, unsavedBuffer))
+        self.context = clang_createTranslationUnitFromSourceFile(index.context, sourceFile, Int32(argc), argv, unsavedCount, unsavedBuffer)
         
-        buffer.dealloc(args.count + 1)
-        if unsavedCount > 0 {
-            unsavedBuffer.dealloc(Int(unsavedCount))
-        }
+//        buffer.dealloc(args.count + 1)
+//        unsavedBuffer.dealloc(Int(unsavedCount + 1))
     }
     
     public convenience init(index: Index, sourceFile: String, args: Array<String>) {
@@ -79,6 +82,9 @@ public final class TranslationUnit {
     }
     
     deinit {
+        if argc > -1 {
+            argv.dealloc(argc + 1)
+        }
         if _tokenCount > 0 {
             clang_disposeTokens(self.context, _tokens, _tokenCount)
         }
