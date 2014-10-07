@@ -13,7 +13,16 @@ public final class SourceLocation {
         self.context = context
     }
     
-    var inSystemHeader: Bool {
+    public convenience init(tu: TranslationUnit, file: File, line: Int, column: Int) {
+        self.init(clang_getLocation(tu.context, file.context, UInt32(line), UInt32(column)))
+    }
+
+    public convenience init(tu: TranslationUnit, file: File, offset: Int) {
+        self.init(clang_getLocationForOffset(tu.context, file.context, UInt32(offset)))
+    }
+
+    
+    public var inSystemHeader: Bool {
         get {
             return clang_Location_isInSystemHeader(self.context) != 0
         }
