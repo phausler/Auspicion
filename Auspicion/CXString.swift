@@ -13,3 +13,10 @@ extension String {
         return String.fromCString(clang_getCString(str))!
     }
 }
+
+extension CXString : NilLiteralConvertible {
+    public init(nilLiteral: ()) {
+        self.data = nil
+        self.private_flags = 0
+    }
+}
