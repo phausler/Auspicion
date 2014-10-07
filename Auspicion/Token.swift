@@ -8,6 +8,27 @@
 
 import clang
 
+extension CXTokenKind {
+    public var name: String {
+        get {
+            switch (self.value) {
+            case CXToken_Comment.value:
+                return "Comment"
+            case CXToken_Identifier.value:
+                return "Identifier"
+            case CXToken_Keyword.value:
+                return "Keyword"
+            case CXToken_Literal.value:
+                return "Literal"
+            case CXToken_Punctuation.value:
+                return "Punctuation"
+            default:
+                return "Unknown"
+            }
+        }
+    }
+}
+
 public final class Token {
     init(_ context: CXToken) {
         self.context = context
